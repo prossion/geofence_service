@@ -54,6 +54,30 @@ class Geofence {
     };
   }
 
+  /// Factory method to create a [Geofence] object from a JSON map.
+  factory Geofence.fromJson(Map<String, dynamic> json) {
+    // Extract values from the JSON map
+    final id = json['id'] as String;
+    final data = json['data'];
+    final latitude = json['latitude'] as double;
+    final longitude = json['longitude'] as double;
+
+    // Extract radius data as a List<GeofenceRadius>
+    final radiusList = json['radius'] as List<dynamic>;
+    final radius = radiusList.map((radiusJson) {
+      return GeofenceRadius.fromJson(radiusJson as Map<String, dynamic>);
+    }).toList();
+
+    // Create and return a Geofence object
+    return Geofence(
+      id: id,
+      data: data,
+      latitude: latitude,
+      longitude: longitude,
+      radius: radius,
+    );
+  }
+
   /// Update the remaining distance of [Geofence].
   void updateRemainingDistance(double distance) {
     if (distance < 0.0) _remainingDistance = 0.0;

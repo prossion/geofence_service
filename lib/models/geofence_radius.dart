@@ -63,6 +63,51 @@ class GeofenceRadius {
     };
   }
 
+  factory GeofenceRadius.fromJson(Map<String, dynamic> json) {
+    // Extract values from the JSON map
+    final id = json['id'] as String;
+    final data = json['data'];
+    final length = json['length'] as double;
+    final statusString = json['status'] as String?;
+    final activityJson = json['activity'] as Map<String, dynamic>?;
+    final speed = json['speed'] as double?;
+    final timestampString = json['timestamp'] as String?;
+    final remainingDistance = json['remainingDistance'] as double?;
+
+    // Parse status from the statusString
+    GeofenceStatus status = GeofenceStatus.EXIT;
+    if (statusString != null) {
+      status = GeofenceStatus.values.firstWhere(
+        (e) => e.toString().split('.').last == statusString,
+        orElse: () => GeofenceStatus.EXIT,
+      );
+    }
+
+    // Parse activity from activityJson
+    Activity? activity;
+    if (activityJson != null) {
+      activity = Activity.fromJson(activityJson);
+    }
+
+    // Parse timestamp from timestampString
+    DateTime? timestamp;
+    if (timestampString != null) {
+      timestamp = DateTime.parse(timestampString);
+    }
+
+    // Create and return a GeofenceRadius object
+    return GeofenceRadius(
+      id: id,
+      data: data,
+      length: length,
+    )
+      .._status = status
+      .._activity = activity
+      .._speed = speed
+      .._timestamp = timestamp
+      .._remainingDistance = remainingDistance;
+  }
+
   /// Update the remaining distance of [GeofenceRadius].
   void updateRemainingDistance(double distance) {
     if (distance < 0.0) _remainingDistance = 0.0;
