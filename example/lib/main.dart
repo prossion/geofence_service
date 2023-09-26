@@ -39,17 +39,18 @@ class _ExampleAppState extends State<ExampleApp> {
         GeofenceRadius(id: 'radius_250m', length: 250),
         GeofenceRadius(id: 'radius_200m', length: 200),
       ],
+      name: 'Kyiv',
     ),
     Geofence(
-      id: 'place_2',
-      latitude: 35.104971,
-      longitude: 129.034851,
-      radius: [
-        GeofenceRadius(id: 'radius_25m', length: 25),
-        GeofenceRadius(id: 'radius_100m', length: 100),
-        GeofenceRadius(id: 'radius_200m', length: 200),
-      ],
-    ),
+        id: 'place_2',
+        latitude: 35.104971,
+        longitude: 129.034851,
+        radius: [
+          GeofenceRadius(id: 'radius_25m', length: 25),
+          GeofenceRadius(id: 'radius_100m', length: 100),
+          GeofenceRadius(id: 'radius_200m', length: 200),
+        ],
+        name: 'Kyiv'),
   ];
 
   // This function is to be called when the geofence status is changed.
@@ -97,9 +98,11 @@ class _ExampleAppState extends State<ExampleApp> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _geofenceService.addGeofenceStatusChangeListener(_onGeofenceStatusChanged);
+      _geofenceService
+          .addGeofenceStatusChangeListener(_onGeofenceStatusChanged);
       _geofenceService.addLocationChangeListener(_onLocationChanged);
-      _geofenceService.addLocationServicesStatusChangeListener(_onLocationServicesStatusChanged);
+      _geofenceService.addLocationServicesStatusChangeListener(
+          _onLocationServicesStatusChanged);
       _geofenceService.addActivityChangeListener(_onActivityChanged);
       _geofenceService.addStreamErrorListener(_onError);
       _geofenceService.start(_geofenceList).catchError(_onError);
@@ -119,7 +122,8 @@ class _ExampleAppState extends State<ExampleApp> {
         androidNotificationOptions: AndroidNotificationOptions(
           channelId: 'geofence_service_notification_channel',
           channelName: 'Geofence Service Notification',
-          channelDescription: 'This notification appears when the geofence service is running in the background.',
+          channelDescription:
+              'This notification appears when the geofence service is running in the background.',
           channelImportance: NotificationChannelImportance.LOW,
           priority: NotificationPriority.LOW,
           isSticky: false,
@@ -157,7 +161,7 @@ class _ExampleAppState extends State<ExampleApp> {
       ],
     );
   }
-  
+
   Widget _buildActivityMonitor() {
     return StreamBuilder<Activity>(
       stream: _activityStreamController.stream,
@@ -176,7 +180,7 @@ class _ExampleAppState extends State<ExampleApp> {
       },
     );
   }
-  
+
   Widget _buildGeofenceMonitor() {
     return StreamBuilder<Geofence>(
       stream: _geofenceStreamController.stream,

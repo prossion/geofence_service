@@ -6,6 +6,9 @@ class Geofence {
   /// Identifier for [Geofence].
   final String id;
 
+  /// City name for [Geofence].
+  final String name;
+
   /// Custom data for [Geofence].
   final dynamic data;
 
@@ -33,6 +36,7 @@ class Geofence {
   /// Constructs an instance of [Geofence].
   Geofence({
     required this.id,
+    required this.name,
     this.data,
     required this.latitude,
     required this.longitude,
@@ -44,6 +48,7 @@ class Geofence {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
+      'name': name,
       'data': data,
       'latitude': latitude,
       'longitude': longitude,
@@ -58,6 +63,7 @@ class Geofence {
   factory Geofence.fromJson(Map<String, dynamic> json) {
     // Extract values from the JSON map
     final id = json['id'] as String;
+    final name = json['name'] as String;
     final data = json['data'];
     final latitude = json['latitude'] as double;
     final longitude = json['longitude'] as double;
@@ -71,6 +77,7 @@ class Geofence {
     // Create and return a Geofence object
     return Geofence(
       id: id,
+      name: name,
       data: data,
       latitude: latitude,
       longitude: longitude,
