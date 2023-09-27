@@ -20,12 +20,6 @@ class GeofenceRadius {
   /// Returns the status of [GeofenceRadius].
   GeofenceStatus get status => _status;
 
-  /// The user activity when geofence status changes.
-  Activity? _activity;
-
-  /// Returns the user activity when geofence status changes.
-  Activity? get activity => _activity;
-
   /// The passing speed when geofence status changes.
   double? _speed;
 
@@ -56,7 +50,6 @@ class GeofenceRadius {
       'data': data,
       'length': length,
       'status': _status,
-      'activity': _activity?.toJson(),
       'speed': _speed,
       'timestamp': _timestamp,
       'remainingDistance': _remainingDistance
@@ -69,7 +62,6 @@ class GeofenceRadius {
     final data = json['data'];
     final length = json['length'] as double;
     final statusString = json['status'] as String?;
-    final activityJson = json['activity'] as Map<String, dynamic>?;
     final speed = json['speed'] as double?;
     final timestampString = json['timestamp'] as String?;
     final remainingDistance = json['remainingDistance'] as double?;
@@ -81,12 +73,6 @@ class GeofenceRadius {
         (e) => e.toString().split('.').last == statusString,
         orElse: () => GeofenceStatus.EXIT,
       );
-    }
-
-    // Parse activity from activityJson
-    Activity? activity;
-    if (activityJson != null) {
-      activity = Activity.fromJson(activityJson);
     }
 
     // Parse timestamp from timestampString
@@ -102,7 +88,6 @@ class GeofenceRadius {
       length: length,
     )
       .._status = status
-      .._activity = activity
       .._speed = speed
       .._timestamp = timestamp
       .._remainingDistance = remainingDistance;
@@ -120,7 +105,6 @@ class GeofenceRadius {
       DateTime? timestamp) {
     if (status != _status) {
       _status = status;
-      _activity = activity;
       _speed = speed;
       _timestamp = timestamp;
       return true;

@@ -14,8 +14,7 @@ dependencies:
 
   fl_location: ^2.1.0
   flutter_foreground_task: ^4.1.0
-  flutter_activity_recognition: 
-    git: https://github.com/prossion/flutter_activity_recognition.git
+  flutter_activity_recognition: ^2.0.0
 
 dev_dependencies:
   flutter_test:
