@@ -1,6 +1,7 @@
 name: geofence_service
 description: This plugin is a geofence service with activity recognition API.
 version: 4.0.0
+publish_to: none
 homepage: https://github.com/Dev-hwang/geofence_service
 
 environment:
@@ -13,7 +14,8 @@ dependencies:
 
   fl_location: ^2.1.0
   flutter_foreground_task: ^4.1.0
-  flutter_activity_recognition: ^2.0.0
+  flutter_activity_recognition: 
+    git: https://github.com/prossion/flutter_activity_recognition.git
 
 dev_dependencies:
   flutter_test:
